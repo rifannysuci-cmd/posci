@@ -12,18 +12,26 @@ class Myigniter extends CI_Controller {
 
 	public function index()
 	{
-		$table = "barang";
-		$data['cari'] = $this->myigniter_model->get($table);
-
-		$data['title'] = "Kasri 1.0";
-		$data['judule'] = "POS By Group 2";
-		$content = "myigniter_view";
-		$this->template->output($data, $content);
+		if ($this->session->userdata('user_data')) {
+			$table = "barang";
+			$data['cari'] = $this->myigniter_model->get($table);
+	
+			$data['title'] = "Kasri 1.0";
+			$data['judule'] = "POS By Group 2";
+			$content = "myigniter_view";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function daftarkeranjang()
-	{
-		$this->load->view('keranjang_view');
+	{		
+		if ($this->session->userdata('user_data')) {
+			$this->load->view('keranjang_view');
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function total()
@@ -78,39 +86,55 @@ class Myigniter extends CI_Controller {
 
 	public function client()
 	{
-		$this->load->view('client_kasir');
+		if ($this->session->userdata('user_data')) {
+			$this->load->view('client_kasir');
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function penjualan()
 	{
-		$table = "penjualan";
-		$data['penjualan'] = $this->myigniter_model->get($table);
+		if ($this->session->userdata('user_data')) {
+			$table = "penjualan";
+			$data['penjualan'] = $this->myigniter_model->get($table);
 
-		$data['title'] = "penjualan";
-		$content = "penjualan";
-		$data['judule'] = "PENJUALAN";
-		$this->template->output($data, $content);
+			$data['title'] = "penjualan";
+			$content = "penjualan";
+			$data['judule'] = "PENJUALAN";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function setoran()
 	{
-		$table = "penjualan";
-		$condition['setor'] = '0';
-    	$data['setoran'] = $this->myigniter_model->setoran($table, $condition);
+		if ($this->session->userdata('user_data')) {
+			$table = "penjualan";
+			$condition['setor'] = '0';
+				$data['setoran'] = $this->myigniter_model->setoran($table, $condition);
 
-		$data['title'] = "Penyetoran";
-		$content = "setoran";
-		$data['judule'] = "SETORAN";
-		$this->template->output($data, $content);
+			$data['title'] = "Penyetoran";
+			$content = "setoran";
+			$data['judule'] = "SETORAN";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function riwayat()
 	{
-    	$data['penjualan'] = $this->myigniter_model->getRiwayat();
-		$data['title'] = "riwayat";
-		$content = "riwayat";
-		$data['judule'] = "RIWAYAT";
-		$this->template->output($data, $content);
+		if ($this->session->userdata('user_data')) {
+			$data['penjualan'] = $this->myigniter_model->getRiwayat();
+			$data['title'] = "riwayat";
+			$content = "riwayat";
+			$data['judule'] = "RIWAYAT";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function setoranSubmit()

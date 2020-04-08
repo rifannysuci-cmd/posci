@@ -9,20 +9,28 @@ class Inventory extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = "Inventory";
-		$table = "barang";
-		$content = "barang/view_barang";
-		$data['barang'] = $this->myigniter_model->get($table);
-		$data['judule'] = "INVENTORY";
-		$this->template->output($data, $content);
+		if ($this->session->userdata('user_data')) {
+			$data['title'] = "Inventory";
+			$table = "barang";
+			$content = "barang/view_barang";
+			$data['barang'] = $this->myigniter_model->get($table);
+			$data['judule'] = "INVENTORY";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	public function tambahBarang()
 	{
-		$data['title'] = "Tambah Barang";
-		$content = "barang/tambah_barang";
-		$data['judule'] = "TAMBAH BARANG";
-		$this->template->output($data, $content);
+		if ($this->session->userdata('user_data')) {
+			$data['title'] = "Tambah Barang";
+			$content = "barang/tambah_barang";
+			$data['judule'] = "TAMBAH BARANG";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	function tambahSubmit()
@@ -41,15 +49,19 @@ class Inventory extends CI_Controller {
 
 	function updateBarang($id)
 	{
-		$table="barang";
-		$condition['id'] = $id;
+		if ($this->session->userdata('user_data')) {
+			$table="barang";
+			$condition['id'] = $id;
 
-		$data['update'] = $this->myigniter_model->getData($table, $condition);
+			$data['update'] = $this->myigniter_model->getData($table, $condition);
 
-		$data['title'] = "Update Barang";
-		$content = "barang/update_barang";
-		$data['judule'] = "EDIT BARANG";
-		$this->template->output($data, $content);
+			$data['title'] = "Update Barang";
+			$content = "barang/update_barang";
+			$data['judule'] = "EDIT BARANG";
+			$this->template->output($data, $content);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	function updateSubmit()

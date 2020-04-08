@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "myigniter";
+$route['default_controller'] = "auth";
 $route['404_override'] = '';
 
 
