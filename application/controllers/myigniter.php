@@ -114,6 +114,7 @@ class Myigniter extends CI_Controller {
 			$table = "penjualan";
 			$condition['setor'] = '0';
 				$data['setoran'] = $this->myigniter_model->setoran($table, $condition);
+				$data['setoran_selesai'] = $this->myigniter_model->setoran_selesai();
 
 			$data['title'] = "Penyetoran";
 			$content = "setoran";
@@ -190,7 +191,8 @@ class Myigniter extends CI_Controller {
 		$datestring = "%Y-%m-%d";
 
 		$tgl = mdate($datestring);
-    	$table = "penjualan";
+		$table = "penjualan";
+		$carts = array();
     	foreach ($this->cart->contents() as $insert){
     		$total = $insert['price']*$insert['qty'];
     		$data = array(
@@ -201,10 +203,23 @@ class Myigniter extends CI_Controller {
     			);
 
     		$this->myigniter_model->addData($table, $data);
-    	}
+			$carts[] = array(
+				'qty' => $data['qty'],
+				'total_harga' => $data['total_harga'],
+				'nama' => $insert['name']
+			);
+		}
+		$this->session->set_userdata('struk_tanggal', date('d F Y H:i:s'));
+		$this->session->set_userdata('struk', $carts);
+		$this->session->set_userdata('struk_read', 0);
         $this->cart->destroy();
    		redirect('myigniter');
-    }
+	}
+	
+	public function remove_struk_read()
+	{
+		$this->session->set_userdata('struk_read', 1);
+	}
 
 }
 

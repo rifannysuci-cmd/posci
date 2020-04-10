@@ -76,7 +76,7 @@ class Auth extends CI_Controller {
       } else {
         $data = array(
           'username' => $this->input->post('username'),
-          'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+          'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
           'nama' => $this->input->post('nama'),
         );
   

@@ -1,4 +1,12 @@
 <!-- Form -->
+<script>
+var struk = JSON.parse('<?php echo isset($this->session->userdata['struk']) ?
+json_encode($this->session->userdata['struk']) : []
+?>')
+var struk_read = '<?php echo isset($this->session->userdata['struk_read']) ?
+$this->session->userdata['struk_read'] : 0
+?>'
+</script>
 <section class="section1">
 	<div class="container">
 	<div class="row">
@@ -88,6 +96,61 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<?php if (isset($this->session->userdata['struk']) && count($this->session->userdata['struk']) && $this->session->userdata['struk_read'] == 0): ?>
+<div class="modal" tabindex="-1" role="dialog" id="modal-struk">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="struk-print">
+      <div class="modal-body">
+		  <div class="container-fluid">
+			  <div class="row">
+				  <div class="col-md-12">
+					  <h1>GROUP 2</h1>
+					  <h4>Struk Pembelian</h4>
+					  <span><?php echo $this->session->userdata['struk_tanggal']; ?></span>
+					  <div style="border-bottom: 1px solid rgb(51,51,51); margin: 20px 0px;"></div>
+				  </div>
+			  </div>
+			  <table class="table table-responsive">
+				  <thead>
+					  <tr>
+						  <th>Nama Barang</th>
+						  <th>Qty</th>
+						  <th>Total Harga</th>
+					  </tr>
+				  </thead>
+				  <tbody>
+					  <?php 
+						$total = 0;
+					  ?>
+					  <?php foreach ($this->session->userdata['struk'] as $struk): ?>
+						<tr>
+						  <td><?php echo $struk['nama'] ?></td>
+						  <td><?php echo $struk['qty'] ?></td>
+						  <td><?php echo $struk['total_harga'] ?></td>
+						  <?php $total += $struk['total_harga'] ?>
+					  </tr>
+					  <?php endforeach; ?>
+				  </tbody>
+				  <tfoot>
+					  <tr>
+						  <td>Total</td>
+						  <td></td>
+						  <td><?php echo $total; ?></td>
+					  </tr>
+				  </tfoot>
+			  </table>
+		  </div>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-success" onclick="printJS('struk-print', 'html')">Print</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery.price_format.2.0.min.js') ?>"></script>
 <script>
@@ -124,7 +187,7 @@ $(function() {
 
 	$('#kembalian').click(function() {
 		site_url = '<?=site_url()?>';
-		$.get(site_url+'/myigniter/total', function(data) {
+		$.get(site_url+'myigniter/total', function(data) {
 			tot = data;
 			bayare = $('#bayare').unmask();
 			kembali = bayare - tot;
@@ -137,13 +200,18 @@ $(function() {
 		/* Act on the event */
 
 	});
+
+	if (struk.length && parseInt(struk_read) == 0) {
+		$('#modal-struk').modal('show')
+		$.get(site_url+'myigniter/remove_struk_read');
+	}
 });
 
 
 function kolom()
 {
   site_url = '<?=site_url()?>';
-  $.get(site_url+'/myigniter/daftarkeranjang', function(data) {
+  $.get(site_url+'myigniter/daftarkeranjang', function(data) {
     $(".keranjang").html(data);
   });
 }
@@ -151,7 +219,7 @@ function kolom()
 function total()
 {
   site_url = '<?=site_url()?>';
-  $.get(site_url+'/myigniter/total', function(data) {
+  $.get(site_url+'myigniter/total', function(data) {
     $("#total, .totalan").html(data).priceFormat({
 		prefix: 'Rp. ',
 	    thousandsSeparator: '.',
@@ -172,7 +240,7 @@ function konfirmasi()
 	      var id = $("#kode").val();
       }
 
-      $.get(site_url+'/myigniter/keranjang/'+id, function() {
+      $.get(site_url+'myigniter/keranjang/'+id, function() {
         /*optional stuff to do after success */
         $("#kode").val('');
         $("#manual").val('');
@@ -188,7 +256,7 @@ function konfirmasi()
 function hapusSemua()
 {
 	site_url = '<?=site_url()?>';
-	$.get(site_url+'/myigniter/delete', function() {
+	$.get(site_url+'myigniter/delete', function() {
 		/*optional stuff to do after success */
 		kolom();
         total();	
