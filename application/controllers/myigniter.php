@@ -202,7 +202,13 @@ class Myigniter extends CI_Controller {
     			'tgl' => $tgl
     			);
 
-    		$this->myigniter_model->addData($table, $data);
+			$this->myigniter_model->addData($table, $data);
+			$table2 = 'barang';
+			$condition2['id'] = $insert['id'];
+			$currentData = $this->myigniter_model->getData($table2, $condition2);
+			$currentData = $currentData->result()[0];
+			$currentData->stok= $currentData->stok - $insert['qty'];
+			$this->myigniter_model->updateData($table2, $currentData, $condition2);
 			$carts[] = array(
 				'qty' => $data['qty'],
 				'total_harga' => $data['total_harga'],
@@ -215,7 +221,7 @@ class Myigniter extends CI_Controller {
         $this->cart->destroy();
    		redirect('myigniter');
 	}
-	
+
 	public function remove_struk_read()
 	{
 		$this->session->set_userdata('struk_read', 1);

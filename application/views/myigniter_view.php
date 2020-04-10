@@ -11,7 +11,7 @@ $this->session->userdata['struk_read'] : 0
 	<div class="container">
 	<div class="row">
 	<div class="col-md-4">
-			
+
 
 	<div class="bs-example bs-example-tabs">
 		<div>
@@ -26,7 +26,7 @@ $this->session->userdata['struk_read'] : 0
 					<div class="input-group">
 						<input id="kode" type="text" name="kode" autocomplete="off" autofocus="autofocus" class="form-control" placeholder="Kode" required="required">
 					</div>
-					<div align="right">		
+					<div align="right">
 					</div>
 				</form>
 		    </div>
@@ -90,7 +90,7 @@ $this->session->userdata['struk_read'] : 0
 			</div>
 			<div class="modal-footer">
 					<button type="button" id="kembalian" class="btn btn-primary">KEMBALIAN</button>
-					<a class="btn btn-success" href="<?=site_url("myigniter/selesai")?>">SLESAI</a>
+					<a class="btn btn-success" href="<?=site_url("myigniter/selesai")?>">SELESAI</a>
 				<form>
 			</div>
 		</div><!-- /.modal-content -->
@@ -120,7 +120,7 @@ $this->session->userdata['struk_read'] : 0
 					  </tr>
 				  </thead>
 				  <tbody>
-					  <?php 
+					  <?php
 						$total = 0;
 					  ?>
 					  <?php foreach ($this->session->userdata['struk'] as $struk): ?>
@@ -259,7 +259,7 @@ function hapusSemua()
 	$.get(site_url+'myigniter/delete', function() {
 		/*optional stuff to do after success */
 		kolom();
-        total();	
+        total();
 	});
 }
 </script>

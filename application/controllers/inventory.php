@@ -37,11 +37,11 @@ class Inventory extends CI_Controller {
 	{
 		$table = "barang";
 		$data = array(
-			'id' => $this->input->post('id'), 
-			'nama' => $this->input->post('nama'), 
-			'harga_beli' => $this->input->post('hargabeli'), 
-			'harga_jual' => $this->input->post('hargajual'), 
-			'stok' => $this->input->post('stok') 
+			'id' => $this->input->post('id'),
+			'nama' => $this->input->post('nama'),
+			'harga_beli' => $this->input->post('hargabeli'),
+			'harga_jual' => $this->input->post('hargajual'),
+			'stok' => $this->input->post('stok')
 			);
 		$this->myigniter_model->addData($table, $data);
 		redirect('inventory/tambahBarang','refresh');
@@ -69,10 +69,10 @@ class Inventory extends CI_Controller {
 		$table = "barang";
 		$condition['id'] = $this->input->post('id');
 		$data = array(
-			'nama' => $this->input->post('nama'), 
-			'harga_beli' => $this->input->post('hargabeli'), 
-			'harga_jual' => $this->input->post('hargajual'), 
-			'stok' => $this->input->post('stok') 
+			'nama' => $this->input->post('nama'),
+			'harga_beli' => $this->input->post('hargabeli'),
+			'harga_jual' => $this->input->post('hargajual'),
+			'stok' => $this->input->post('stok')
 		);
 		$this->myigniter_model->updateData($table, $data, $condition);
 		redirect('inventory');
