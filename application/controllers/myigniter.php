@@ -15,8 +15,8 @@ class Myigniter extends CI_Controller {
 		if ($this->session->userdata('user_data')) {
 			$table = "barang";
 			$data['cari'] = $this->myigniter_model->get($table);
-	
-			$data['title'] = "Kasri 1.0";
+
+			$data['title'] = "POS";
 			$data['judule'] = "POS By Group 2";
 			$content = "myigniter_view";
 			$this->template->output($data, $content);
@@ -26,7 +26,7 @@ class Myigniter extends CI_Controller {
 	}
 
 	public function daftarkeranjang()
-	{		
+	{
 		if ($this->session->userdata('user_data')) {
 			$this->load->view('keranjang_view');
 		} else {

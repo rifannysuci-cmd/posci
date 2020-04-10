@@ -24,7 +24,7 @@
 		<script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
     <title>Register</title>
   </head>
-  <body>    
+  <body>
     <div class="container">
       <div class="card card-auth mx-auto mt-5">
         <div class="card-header bg-success text-white">Register</div>
@@ -61,6 +61,6 @@
         </div>
       </div>
     </div>
-    
+
   </body>
 </html>
